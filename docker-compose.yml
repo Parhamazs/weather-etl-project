@@ -25,5 +25,23 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PORT: 5432
 
+
+  # سرویس گزارش‌گیری و تولید نمودار (ماهانه/دوره‌ای)
+  reporter_job:
+    build: .
+    container_name: weather_reporter_job
+    depends_on:
+      - db
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=db
+      - DB_PORT=5432
+    volumes:
+      - ./data:/app/data
+    command: ["python", "scripts/transform_report.py"]
+    profiles: ["reporting"]
+
 volumes:
   postgres_data:
