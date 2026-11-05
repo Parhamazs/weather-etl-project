@@ -18,9 +18,10 @@ def wait_for_db(engine, retries=5, delay=3):
                 print("Connected to PostgreSQL successfully!")
                 return True
         except Exception as e:
-            print(f"Waiting for database to be ready... ({i+1}/{retries})")
+            # اینجا e دقیقاً به ما می‌گوید که مشکل چیست (مثلاً Authentication Failed یا Connection Refused)
+            print(f"Attempt {i+1}/{retries} failed. Error: {e}") 
             time.sleep(delay)
-    raise Exception("Could not connect to the database.")
+    raise Exception("Could not connect to the database. Check your .env credentials and DB_HOST.")
 
 def fetch_weather_data():
     url = "https://api.open-meteo.com/v1/forecast?latitude=35.6892&longitude=51.3890&daily=temperature_2m_max,precipitation_sum&timezone=auto"
