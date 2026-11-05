@@ -1,1 +1,11 @@
+# Ignore environment files
 .env
+
+# Ignore python cache and environment
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Ignore database data
+postgres_data/
